@@ -1,0 +1,61 @@
+'use client';
+import { useRef, useEffect } from 'react';
+import gsap from 'gsap';
+import { useReveal } from '@/features/animations/hooks/useReveal';
+
+function getRevealMode(trigger) {
+  if (trigger === 'pageEnter') return 'hero';
+  if (trigger === 'manual') return 'manual';
+  return 'scroll';
+}
+
+export default function FadeIn({
+  as: Component = 'div',
+  children,
+  className = '',
+  y = 16,
+  duration = 0.7,
+  ease = 'power2.out',
+  delay = 0,
+  stagger = 0,
+  trigger = 'pageEnter',
+  start = 'top 85%',
+  enabled = true,
+  onReady,
+  ...restProps
+}) {
+  const elementRef = useRef(null);
+
+  const build = enabled
+    ? (element) => {
+        const targets = stagger > 0 ? Array.from(element.children) : [element];
+
+        return gsap
+          .timeline({ paused: true })
+          .fromTo(
+            targets,
+            { autoAlpha: 0, y },
+            { autoAlpha: 1, y: 0, duration, ease, delay, stagger },
+          );
+      }
+    : null;
+
+  const { play } = useReveal(elementRef, {
+    mode: getRevealMode(trigger),
+    build,
+    start,
+    deps: [enabled, y, duration, ease, delay, stagger],
+  });
+
+  useEffect(() => {
+    if (trigger === 'manual' && enabled && onReady) {
+      onReady(play);
+    }
+  }, [trigger, enabled, onReady, play]);
+
+  return (
+    <Component ref={elementRef} className={className} {...restProps}>
+      {children}
+    </Component>
+  );
+}
