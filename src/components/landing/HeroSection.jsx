@@ -2,7 +2,7 @@ import { translate } from '@/libs/utils/i18n';
 import AnimatedButton from '@/features/animations/components/AnimatedButton';
 import AnimatedSubtext from '@/features/animations/components/AnimatedSubtext';
 import AnimatedText from '@/features/animations/components/AnimatedText';
-import AnimationsFilterBar from '@/features/animations/components/AnimationsFilterBar';
+import AnimationsFilterBar from '@/components/shared/AnimationsFilterBar';
 import LandingLogos from '@/components/landing/LandingLogos';
 
 const ANIMATION_PROPS = {

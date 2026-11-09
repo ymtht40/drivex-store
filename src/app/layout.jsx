@@ -2,7 +2,7 @@ import Provider from '@/app/provider';
 import localFont from 'next/font/local';
 import Script from 'next/script';
 import { getCategories } from '@/libs/supabase/latestAnimation';
-import '@/styles/global.css';
+import '@/styles/style.css';
 
 export const metadata = {
   metadataBase: new URL("https://anm.drivexstore.shop"),
